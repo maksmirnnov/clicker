@@ -13,7 +13,7 @@ export function useFetch<T>(request: (data?: T) => AxiosPromise, data: T) {
         setError({ok: false, error: '', error_ui: ''})
 
         request(data)
-            .then((response: AxiosResponse) => {
+            .then((response: AxiosResponse<ICountResponse>) => {
                 setResponse(response.data)
             })
             .catch((e: AxiosError<IErrorType>) => {
