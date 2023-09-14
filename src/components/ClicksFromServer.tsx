@@ -1,9 +1,17 @@
 import { Alert } from '@mui/material';
+import { CountType } from '../types/CountType';
 
-export default function ClicksFromServer({ count, err }: any) {
+interface IClicksFromServerProps {
+    count: CountType
+    err: string
+}
+
+const ClicksFromServer: React.FC<IClicksFromServerProps> = ({ count, err }) => {
     return (
         <Alert severity="warning">
-            {err.error_ui || `По версии сервера: ${count.count} раз`}
+            {err || `По версии сервера: ${count?.count ?? 0} раз`}
         </Alert>
     )
 }
+
+export { ClicksFromServer }

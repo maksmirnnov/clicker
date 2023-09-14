@@ -1,36 +1,30 @@
 import { useEffect, useState } from "react"
 
-const useFetch = (request: CallableFunction, count: number) => {
-    type useFetchCountType = {
-        count: number
-    }
-
+export function useFetch(request: CallableFunction, data: object) {
     const [loading, setLoading] = useState<boolean>(false)
-    const [error, setError] = useState<{ok: boolean, error: string, error_ui: string}>({ok: true, error: '', error_ui: ''})
-    const [data, setData] = useState<useFetchCountType>({count: 0})
+    const [error, setError] = useState<string>('')
+    const [response, setResponse] = useState<any>()
 
     useEffect(() => {
         setLoading(true)
-        setError({ok: true, error: '', error_ui: ''})
+        setError('')
         
-        request(count)
-            .then((responce: any) => {
-                setData(responce.data)
+        request(data)
+            .then((response: any) => {
+                setResponse(response.data)
             })
             .catch((e: any) => {
-                setError(e.response.data)
+                setError(e.response.data.error_ui)
                 setLoading(false)
             })
             .finally(() => {
                 setLoading(false)
             })
-    }, [count])
+    }, [data])
 
     return [
-        data,
+        response,
         loading,
         error
     ]  as const
 }
-
-export default useFetch;

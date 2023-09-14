@@ -1,26 +1,27 @@
 import { Button, Stack, Alert, CircularProgress } from '@mui/material';
 import { useCallback, useRef, useState, useEffect } from 'react';
-import useFetch from './hooks/useFetch';
-import ClicksFromServer from './components/ClicksFromServer';
-import fetchCount from './api/fetchCount';
+import { useFetch } from './hooks/useFetch';
+import { COUNT_CREATOR, fetchCount } from './api/fetchCount';
+import { ClicksFromServer } from './components/ClicksFromServer';
+import { CountType } from './types/CountType';
 
 function App() {
     const [count, setCount] = useState<number>(0)
-    const [triggerCount, setTriggerCount] = useState<number>(0)
-    const [data, loading, error] = useFetch(fetchCount, triggerCount)
+    const [data, setData] = useState<CountType>({count: 0})
+    const [response, loading, error] = useFetch(fetchCount, data)
 
     useEffect(() => {
-        debounceSetTriggerCount()
+        debounceSetData()
     }, [count])
 
-    const timer = useRef<any>()
-    const debounceSetTriggerCount = useCallback(() => {
+    const timer = useRef<number>()
+    const debounceSetData = useCallback(() => {
         if(timer.current) {
-            clearTimeout(timer.current)
+            window.clearTimeout(timer.current)
         }
 
         timer.current = window.setTimeout(() => {
-            setTriggerCount(count)
+            setData(COUNT_CREATOR(count))
         }, 1000)
 
     }, [count])
@@ -52,7 +53,7 @@ function App() {
                 <Alert variant="filled" severity="info">
                     Кликнули {count} раз
                 </Alert>
-                <ClicksFromServer count={data} err={error} />
+                <ClicksFromServer count={response} err={error} />
             </Stack>
         </div>
     );
