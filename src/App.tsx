@@ -2,8 +2,8 @@ import { Button, Stack, Alert, CircularProgress } from '@mui/material';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import { useFetch } from './hooks/useFetch';
 import { COUNT_CREATOR, fetchCount } from './api/fetchCount';
-import { ClicksFromServer } from './components/ClicksFromServer';
-import { CountType } from './types/CountType';
+import { CountType } from './types/CountTypes';
+import ClicksFromServer from './components/ClicksFromServer';
 
 function App() {
     const [count, setCount] = useState<number>(0)
@@ -29,7 +29,6 @@ function App() {
     return (
         <div className="App" style={{display: 'grid', height: '100vh', justifyItems: 'center', alignContent: 'center'}}>
             <Stack direction="column" spacing={2}>
-                
                 <Button
                     color="warning"
                     disabled={loading ? true : false}

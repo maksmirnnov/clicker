@@ -1,20 +1,23 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { AxiosError, AxiosPromise, AxiosResponse } from "axios";
+import { ICountResponse } from "../types/CountTypes";
+import { IErrorType } from "../types/ErrorType";
 
-export function useFetch(request: CallableFunction, data: object) {
+export function useFetch<T>(request: (data?: T) => AxiosPromise, data: T) {
     const [loading, setLoading] = useState<boolean>(false)
-    const [error, setError] = useState<string>('')
-    const [response, setResponse] = useState<any>()
+    const [error, setError] = useState<IErrorType>({ok: false, error: '', error_ui: ''})
+    const [response, setResponse] = useState<ICountResponse>({ok: false, count: 0})
 
     useEffect(() => {
         setLoading(true)
-        setError('')
-        
+        setError({ok: false, error: '', error_ui: ''})
+
         request(data)
-            .then((response: any) => {
+            .then((response: AxiosResponse) => {
                 setResponse(response.data)
             })
-            .catch((e: any) => {
-                setError(e.response.data.error_ui)
+            .catch((e: AxiosError<IErrorType>) => {
+                e.response && setError(e.response.data)
                 setLoading(false)
             })
             .finally(() => {
