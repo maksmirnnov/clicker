@@ -1,9 +1,10 @@
 import { Button, Stack, Alert, CircularProgress } from '@mui/material';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useFetch } from './hooks/useFetch';
 import { COUNT_CREATOR, fetchCount } from './api/fetchCount';
 import { CountType } from './types/CountTypes';
 import ClicksFromServer from './components/ClicksFromServer';
+import useDebounce from './hooks/useDebounce';
 
 function App() {
     const [count, setCount] = useState<number>(0)
@@ -14,17 +15,9 @@ function App() {
         debounceSetData()
     }, [count])
 
-    const timer = useRef<number>()
-    const debounceSetData = useCallback(() => {
-        if(timer.current) {
-            window.clearTimeout(timer.current)
-        }
-
-        timer.current = window.setTimeout(() => {
-            setData(COUNT_CREATOR(count))
-        }, 1000)
-
-    }, [count])
+    const debounceSetData = useDebounce(() => {
+        setData(COUNT_CREATOR(count))
+    }, 1000)
 
     return (
         <div className="App" style={{display: 'grid', height: '100vh', justifyItems: 'center', alignContent: 'center'}}>
