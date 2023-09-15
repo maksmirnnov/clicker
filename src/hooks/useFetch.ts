@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { AxiosError, AxiosPromise, AxiosResponse } from "axios";
 import { ICountResponse } from "../types/CountTypes";
-import { IErrorType } from "../types/ErrorType";
+import { IFetchError } from "../types/ErrorType";
 
 export function useFetch<T>(request: (data?: T) => AxiosPromise, data: T) {
     const [loading, setLoading] = useState<boolean>(false)
-    const [error, setError] = useState<IErrorType>({ok: false, error: '', error_ui: ''})
+    const [error, setError] = useState<IFetchError>({ok: false, error: '', error_ui: ''})
     const [response, setResponse] = useState<ICountResponse>({ok: false, count: 0})
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export function useFetch<T>(request: (data?: T) => AxiosPromise, data: T) {
             .then((response: AxiosResponse<ICountResponse>) => {
                 setResponse(response.data)
             })
-            .catch((e: AxiosError<IErrorType>) => {
+            .catch((e: AxiosError<IFetchError>) => {
                 e.response && setError(e.response.data)
                 setLoading(false)
             })

@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.cd1d7ded.css","mappings":"AAAA,KAII,oBAAqB,CAHrB,YAAa,CACb,YAAa,CACb,oBAEJ","sources":["App.css"],"sourcesContent":[".App {\r\n    display: grid;\r\n    height: 100vh;\r\n    justify-items: center;\r\n    align-content: center;\r\n}"],"names":[],"sourceRoot":""}

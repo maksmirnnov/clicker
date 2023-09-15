@@ -1,0 +1,6 @@
+.App {
+    display: grid;
+    height: 100vh;
+    justify-items: center;
+    align-content: center;
+}
