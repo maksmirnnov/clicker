@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Button, Stack, Alert, CircularProgress } from '@mui/material';
-import ServerClicksAlert from '../UI/ServerClicksAlert';
+import ServerClicksAlert from '../components/ServerClicksAlert';
 import useDebounce from '../hooks/useDebounce';
 import { COUNT_CREATOR, fetchCount } from '../api/fetchCount';
 import { CountType } from '../types/CountTypes';

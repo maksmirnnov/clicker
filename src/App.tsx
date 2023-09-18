@@ -1,5 +1,5 @@
 import './App.css'
-import { Clicker } from './components/Clicker';
+import { Clicker } from './modules/Clicker';
 
 function App() {    
     return (
